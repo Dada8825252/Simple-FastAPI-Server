@@ -14,6 +14,7 @@ class Item(BaseModel):
     price: float = 0.0
 
 # GET: Fetch all items
+@app.head("/items/")
 @app.get("/items/", response_model=List[Dict])
 def get_items():
     return [{"id": item_id, **item.dict()} for item_id, item in items_db.items()]
@@ -51,4 +52,5 @@ def delete_item(item_id: int):
     raise HTTPException(status_code=404, detail="Item not found")
 
 # To run the FastAPI app:
-# uvicorn main:app --reload
+# uvicorn main:app --host 0.0.0.0 --port 8000
+
